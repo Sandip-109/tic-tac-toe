@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  /* padding: 0; */
+  box-sizing: border-box;
+}
+
+.game {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.game-board p {
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.winner-square {
+  background-color: green;
+  color: white;
+}
+
+.game-history {
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+}
+
+.game-history>button {
+  align-self: center;
+}
