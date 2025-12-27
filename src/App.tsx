@@ -5,20 +5,25 @@ import { useState } from "react";
 import { calculateWinner } from "./utils/helper";
 
 export type IndiviualMoveArray = Array<"X" | "O" | null>;
+export type MovePosition = { x: number | null; y: number | null };
+export type History = Array<{
+    squares: IndiviualMoveArray;
+    movePosition: MovePosition;
+}>;
 
 function App() {
-    const [history, setHistory] = useState<Array<IndiviualMoveArray>>([
-        Array(9).fill(null),
+    const [history, setHistory] = useState<History>([
+        { squares: Array(9).fill(null), movePosition: { x: null, y: null } },
     ]);
     const [currentMove, setCurrentMove] = useState(0);
     const currentSquares = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
     const [isHistoryListReversed, setIsHistoryListReversed] = useState(false);
-    const winnerInfo = calculateWinner(currentSquares);
+    const winnerInfo = calculateWinner(currentSquares.squares);
 
     let status: string;
     const winner = winnerInfo?.winner;
-    const isDraw = !winner && currentSquares.every(Boolean);
+    const isDraw = !winner && currentSquares.squares.every(Boolean);
     if (winner) {
         status = `Winner: ${winner}`;
     } else if (isDraw) {
@@ -27,7 +32,10 @@ function App() {
         status = `Next Player: ${xIsNext ? "X" : "O"}`;
     }
 
-    function handlePlay(nextSquares: IndiviualMoveArray) {
+    function handlePlay(nextSquares: {
+        squares: IndiviualMoveArray;
+        movePosition: MovePosition;
+    }) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
@@ -38,7 +46,7 @@ function App() {
     }
 
     function handleReverseOrderClick() {
-        setIsHistoryListReversed((t) => !t);
+        setIsHistoryListReversed((r) => !r);
     }
 
     return (

@@ -1,9 +1,9 @@
 import HistoryListItem from "./HistoryListItem";
-import type { IndiviualMoveArray } from "../App";
+import type { History } from "../App";
 
 type HistoryListProps = {
     jumpTo: (nextMove: number) => void;
-    history: IndiviualMoveArray[];
+    history: History;
     currentMove: number;
     isListReversed: boolean;
 };
@@ -18,15 +18,18 @@ export default function HistoryList({
         jumpTo(nextMove);
     }
 
-    const listItems = history.map((_move, index) => {
+    const listItems = history.map(({ movePosition: { x, y } }, index) => {
         const isActive = currentMove === index;
 
+        const coordinates = `(${x}, ${y})`;
         let value: string;
         if (isActive) {
             value = `You are at move #${index}`;
         } else {
             value = index === 0 ? "Go to game start" : `Go to move ${index}`;
         }
+
+        if (index > 0) value += ` ${coordinates}`;
 
         return (
             <HistoryListItem
