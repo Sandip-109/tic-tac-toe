@@ -4,26 +4,27 @@ import HistoryList from "./components/HistoryList";
 import { useState } from "react";
 import { calculateWinner } from "./utils/helper";
 
-export type IndiviualMoveArray = Array<"X" | "O" | null>;
+export type Squares = Array<"X" | "O" | null>;
 export type MovePosition = { x: number | null; y: number | null };
-export type History = Array<{
-    squares: IndiviualMoveArray;
+export type SquaresData = {
+    squares: Squares;
     movePosition: MovePosition;
-}>;
+};
+export type MovesHistory = SquaresData[];
 
 function App() {
-    const [history, setHistory] = useState<History>([
+    const [history, setHistory] = useState<MovesHistory>([
         { squares: Array(9).fill(null), movePosition: { x: null, y: null } },
     ]);
     const [currentMove, setCurrentMove] = useState(0);
-    const currentSquares = history[currentMove];
+    const currentSquaresData = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
     const [isHistoryListReversed, setIsHistoryListReversed] = useState(false);
-    const winnerInfo = calculateWinner(currentSquares.squares);
+    const winnerInfo = calculateWinner(currentSquaresData.squares);
 
     let status: string;
     const winner = winnerInfo?.winner;
-    const isDraw = !winner && currentSquares.squares.every(Boolean);
+    const isDraw = !winner && currentSquaresData.squares.every(Boolean);
     if (winner) {
         status = `Winner: ${winner}`;
     } else if (isDraw) {
@@ -32,11 +33,11 @@ function App() {
         status = `Next Player: ${xIsNext ? "X" : "O"}`;
     }
 
-    function handlePlay(nextSquares: {
-        squares: IndiviualMoveArray;
-        movePosition: MovePosition;
-    }) {
-        const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    function handlePlay(nextSquaresData: SquaresData) {
+        const nextHistory = [
+            ...history.slice(0, currentMove + 1),
+            nextSquaresData,
+        ];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
     }
@@ -56,7 +57,7 @@ function App() {
                 <Board
                     xIsNext={xIsNext}
                     onPlay={handlePlay}
-                    squares={currentSquares}
+                    squaresData={currentSquaresData}
                     winnerInfo={winnerInfo}
                 />
             </div>

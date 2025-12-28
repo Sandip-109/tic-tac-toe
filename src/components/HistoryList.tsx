@@ -1,9 +1,9 @@
 import HistoryListItem from "./HistoryListItem";
-import type { History } from "../App";
+import type { MovesHistory } from "../App";
 
 type HistoryListProps = {
     jumpTo: (nextMove: number) => void;
-    history: History;
+    history: MovesHistory;
     currentMove: number;
     isListReversed: boolean;
 };

@@ -1,7 +1,7 @@
-import type { IndiviualMoveArray } from "../App";
+import type { Squares } from "../App";
 
 type SquareProps = {
-    value: IndiviualMoveArray[number];
+    value: Squares[number];
     onSquareClick: () => void;
     isWinningSquare: boolean;
 };
@@ -13,7 +13,7 @@ export default function Square({
 }: SquareProps) {
     return (
         <button
-            className={`square ${isWinningSquare ? "winner-square" : ""}`}
+            className={`square ${isWinningSquare ? "winning-square" : ""}`}
             onClick={onSquareClick}
         >
             {value}

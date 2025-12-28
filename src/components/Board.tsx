@@ -1,26 +1,26 @@
 import Square from "./Square";
-import type { IndiviualMoveArray, MovePosition } from "../App";
+import type { MovePosition, SquaresData } from "../App";
 import { calculateWinner } from "../utils/helper";
 
 type BoardProps = {
     xIsNext: boolean;
-    squares: { squares: IndiviualMoveArray; movePosition: MovePosition };
-    onPlay: (squares: BoardProps["squares"]) => void;
+    squaresData: SquaresData;
+    onPlay: (squares: SquaresData) => void;
     winnerInfo: ReturnType<typeof calculateWinner>;
 };
 
 export default function Board({
     xIsNext,
-    squares,
+    squaresData,
     onPlay,
     winnerInfo,
 }: BoardProps) {
     function handleSquareClick(index: number, movePosition: MovePosition) {
-        if (squares.squares[index] || winnerInfo?.winner) {
+        if (squaresData.squares[index] || winnerInfo?.winner) {
             return;
         }
 
-        const nextSquares = { squares: squares.squares.slice(), movePosition };
+        const nextSquares = { squares: squaresData.squares.slice(), movePosition };
         if (xIsNext) {
             nextSquares.squares[index] = "X";
         } else {
@@ -40,7 +40,7 @@ export default function Board({
                 <div className="row">
                     {row.map((item, itemIndex) => (
                         <Square
-                            value={squares.squares[item]}
+                            value={squaresData.squares[item]}
                             onSquareClick={() =>
                                 handleSquareClick(item, {
                                     x: rowIndex,
