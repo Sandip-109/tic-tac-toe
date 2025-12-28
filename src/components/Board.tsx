@@ -20,14 +20,17 @@ export default function Board({
             return;
         }
 
-        const nextSquares = { squares: squaresData.squares.slice(), movePosition };
+        const nextSquaresData = {
+            squares: squaresData.squares.slice(),
+            movePosition,
+        };
         if (xIsNext) {
-            nextSquares.squares[index] = "X";
+            nextSquaresData.squares[index] = "X";
         } else {
-            nextSquares.squares[index] = "O";
+            nextSquaresData.squares[index] = "O";
         }
 
-        onPlay(nextSquares);
+        onPlay(nextSquaresData);
     }
 
     return (
