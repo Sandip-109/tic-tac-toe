@@ -1,7 +1,7 @@
-import type { Squares } from "../App";
+import type { Square } from "../App";
 
 type SquareProps = {
-    value: Squares[number];
+    value: Square;
     onSquareClick: () => void;
     isWinningSquare: boolean;
 };

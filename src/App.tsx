@@ -4,7 +4,8 @@ import HistoryList from "./components/HistoryList";
 import { useState } from "react";
 import { calculateWinner } from "./utils/helper";
 
-export type Squares = Array<"X" | "O" | null>;
+export type Square = "X" | "O" | null;
+export type Squares = Square[];
 export type MovePosition = { x: number | null; y: number | null };
 export type SquaresData = {
     squares: Squares;
